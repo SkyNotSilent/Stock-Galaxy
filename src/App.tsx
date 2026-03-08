@@ -35,7 +35,13 @@ export default function App() {
             setSelectedStock(stock);
             // Don't auto-focus on single click, let double click handle flight
           }}
-          onFocus={(pos, scale) => setFocusTarget({ position: pos, scale: scale || 1 })}
+          onFocus={(pos, scale) => {
+            if (pos) {
+              setFocusTarget({ position: pos, scale: scale || 1 });
+            } else {
+              setFocusTarget(null);
+            }
+          }}
           theme={theme} 
           viewMode={viewMode}
           focusTarget={focusTarget}

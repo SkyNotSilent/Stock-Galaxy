@@ -18,7 +18,7 @@ interface GalaxyProps {
 
 export function Galaxy({ data, onSelect, onFocus, theme, viewMode, focusTarget }: GalaxyProps) {
   const isDark = theme === 'dark';
-  const controlsRef = useRef<OrbitControlsImpl>(null);
+  const controlsRef = useRef<OrbitControlsImpl>(null!);
 
   return (
     <>
