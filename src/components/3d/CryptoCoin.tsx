@@ -66,18 +66,38 @@ export function CryptoCoin({ data, position, scale, onSelect, onFocus, theme, vi
     if (!meshRef.current) return;
     
     // Smoothly interpolate position to target
-    // Add staggered delay based on index for organic feel
+    // We want a clear visual transition where coins travel to their new spots
     const currentPos = meshRef.current.position;
     
-    // Use a simpler lerp speed
-    // Stagger logic: We don't want to block motion, just vary the speed slightly
-    // or add a time-based offset.
-    // Let's vary the speed: some coins are faster, some slower.
-    const speed = 2 + (index % 5) * 0.2; 
+    // Calculate distance to target
+    const targetPos = new THREE.Vector3(...position);
+    const distance = currentPos.distanceTo(targetPos);
     
-    // Check for NaN positions to avoid black screen
-    if (!isNaN(position[0]) && !isNaN(position[1]) && !isNaN(position[2])) {
-        currentPos.lerp(new THREE.Vector3(...position), delta * speed);
+    // If distance is significant, we are in a transition state
+    // Use a spring-like ease-out for natural movement
+    // Stagger based on index to create a "wave" effect rather than rigid block movement
+    
+    // Speed factor: 
+    // - Closer coins move slower (precision)
+    // - Further coins move faster (catch up)
+    // - Add index-based delay logic by modulating speed
+    
+    // Base speed
+    let speed = 3.0;
+    
+    // Add organic variation
+    // index % 10 gives groups of 10
+    // Math.sin gives wave pattern
+    const organicDelay = Math.sin(index * 0.5 + state.clock.elapsedTime) * 0.5 + 1;
+    
+    if (distance > 0.1) {
+       // Transitioning
+       // Lerp with variable speed creates the "streaming" effect
+       currentPos.lerp(targetPos, delta * (speed * organicDelay));
+    } else {
+       // Arrived (or very close)
+       // Snap to exact position to prevent micro-jitter
+       currentPos.lerp(targetPos, delta * 10);
     }
 
     // Rotate coin
