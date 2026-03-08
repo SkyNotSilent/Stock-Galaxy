@@ -150,7 +150,7 @@ export default function App() {
         {/* Bottom Bar */}
         <div className="flex justify-between items-end">
           <div className={`pointer-events-auto backdrop-blur-md px-4 py-2 rounded-full border text-xs font-mono ${theme === 'dark' ? 'bg-black/40 border-white/5 text-gray-400' : 'bg-white/60 border-black/5 text-gray-600'}`}>
-             Navigation: Left Click + Drag to Rotate • Scroll to Zoom • Right Click to Pan
+             Navigation: Click to Fly • Drag to Rotate • Scroll to Zoom
           </div>
           
           <div className="text-right">
