@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Galaxy } from './components/3d/Galaxy';
+import { CyberText } from './components/CyberText';
 import { useStockData, type StockData } from './hooks/useStockData';
 import { Moon, Sun, Globe, BarChart3, TrendingUp, X } from 'lucide-react';
 
@@ -55,10 +56,25 @@ export default function App() {
         <div className="flex justify-between items-start">
           <div className="pointer-events-auto flex items-start gap-4">
              <div>
-                <h1 className={`text-4xl font-black text-transparent bg-clip-text uppercase tracking-tighter ${theme === 'dark' ? 'bg-gradient-to-r from-cyan-400 to-blue-600' : 'bg-gradient-to-r from-blue-600 to-purple-600'}`}>
-                  Stock Galaxy
-                </h1>
-                <p className={`text-xs font-mono mt-1 ${theme === 'dark' ? 'text-cyan-500/50' : 'text-blue-600/50'}`}>IMMERSIVE MARKET VISUALIZATION</p>
+                <div className="relative group cursor-default">
+                  <h1 className={`text-5xl font-black text-transparent bg-clip-text uppercase tracking-widest transition-all duration-300 ${theme === 'dark' ? 'bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600' : 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600'}`}
+                      style={{ fontFamily: "'Orbitron', sans-serif", textShadow: theme === 'dark' ? '0 0 20px rgba(6,182,212,0.5)' : '0 0 20px rgba(59,130,246,0.3)' }}>
+                    Crypto Galaxy
+                  </h1>
+                  {/* Glitch Effect Layers */}
+                  <h1 className="absolute top-0 left-0 text-5xl font-black text-transparent bg-clip-text uppercase tracking-widest opacity-0 group-hover:opacity-70 group-hover:animate-glitch-1"
+                      style={{ fontFamily: "'Orbitron', sans-serif", backgroundImage: 'linear-gradient(45deg, #ff00ff, #00ffff)', clipPath: 'polygon(0 0, 100% 0, 100% 45%, 0 45%)', transform: 'translate(-2px, 2px)' }}>
+                    Crypto Galaxy
+                  </h1>
+                  <h1 className="absolute top-0 left-0 text-5xl font-black text-transparent bg-clip-text uppercase tracking-widest opacity-0 group-hover:opacity-70 group-hover:animate-glitch-2"
+                      style={{ fontFamily: "'Orbitron', sans-serif", backgroundImage: 'linear-gradient(45deg, #00ffff, #ff00ff)', clipPath: 'polygon(0 60%, 100% 60%, 100% 100%, 0 100%)', transform: 'translate(2px, -2px)' }}>
+                    Crypto Galaxy
+                  </h1>
+                </div>
+                <p className={`text-xs font-mono mt-2 tracking-[0.3em] flex items-center gap-2 ${theme === 'dark' ? 'text-cyan-500/70' : 'text-blue-600/60'}`}>
+                  <span className="w-2 h-2 bg-current rounded-full animate-pulse"></span>
+                  IMMERSIVE MARKET VISUALIZATION
+                </p>
              </div>
              
              {/* Theme Toggle */}
@@ -149,8 +165,13 @@ export default function App() {
 
         {/* Bottom Bar */}
         <div className="flex justify-between items-end">
-          <div className={`pointer-events-auto backdrop-blur-md px-4 py-2 rounded-full border text-xs font-mono ${theme === 'dark' ? 'bg-black/40 border-white/5 text-gray-400' : 'bg-white/60 border-black/5 text-gray-600'}`}>
-             Navigation: Click to Fly • Drag to Rotate • Scroll to Zoom
+          <div className="pointer-events-auto">
+            <CyberText 
+              textEn="Navigation: Click to Fly • Drag to Rotate • Scroll to Zoom"
+              textCn="导航指南：点击飞行 • 拖拽旋转 • 滚轮缩放"
+              interval={4000}
+              theme={theme}
+            />
           </div>
           
           <div className="text-right">
